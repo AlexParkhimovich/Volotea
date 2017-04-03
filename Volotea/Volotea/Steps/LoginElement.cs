@@ -56,10 +56,19 @@ namespace Volotea.Steps
             SignInElement.Click();
             this.WaitUntilDisplayed(UsernameFieldElement);
             this.WaitUntilDisplayed(UserpasswordElement);
+            this.FillFields(username, password);
+            RememberLoginElement.Click();
+            LoginButtonElement.Click();
+
+            /*
+            SignInElement.Click();
+            this.WaitUntilDisplayed(UsernameFieldElement);
+            this.WaitUntilDisplayed(UserpasswordElement);
 
             this.FillFields(username, password);
             RememberLoginElement.Click();
             LoginButtonElement.Click();
+            */
         }
 
         private void FillFields(string username, string password)
