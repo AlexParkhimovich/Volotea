@@ -15,6 +15,7 @@ namespace Volotea.Utils
         {
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(locator));
+            //wait.Until(ExpectedConditions.ElementToBeClickable(locator));
             return Driver.FindElement(locator);
         }
 
@@ -31,7 +32,7 @@ namespace Volotea.Utils
         public static void MoveToElementAndClick(IWebDriver Driver, By locator)
         {
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(locator));
+            wait.Until(ExpectedConditions.ElementToBeClickable(locator));
             Actions act = new Actions(Driver);
             act.MoveToElement(Driver.FindElement(locator)).Click();
             act.Perform();

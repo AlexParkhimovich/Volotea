@@ -5,19 +5,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volotea.Utils;
 
 namespace Volotea.Steps
 {
     public class LoginElement : BasePage
     {
         private By signInLocator = By.XPath("//a[@class='switcherLogin']");
+        private string signInButtonXPath = "//a[@class='switcherLogin']";
+
         private By usernameFieldLocator = By.XPath("//input[@id='emailLoginForm']");
+        private string userNameXpath = "//input[@id='emailLoginForm']";
+
         private By userpasswordFieldLocator = By.XPath("//input[@id='passwordLoginForm']");
+        private string userPassLocator = "//input[@id='passwordLoginForm']";
+
         private By loginButtonLocator = By.XPath("//a[contains(@class,'button sm block voloteaButton color1 alternateFont submitAnchor')]");
+        private string loginInButtonXpath = "//a[contains(@class,'button sm block voloteaButton color1 alternateFont submitAnchor')]";
+
         private By rememberLoginLocator = By.XPath("//ins[@class='iCheck-helper']");
         private By yourProfileLocator = By.XPath("//a[@class='switcherProfileResume']");
 
         public LoginElement(string browser) : base(browser)
+        {
+        }
+
+        public LoginElement(BasePage bp) : base(bp)
         {
         }
 
@@ -76,12 +89,10 @@ namespace Volotea.Steps
 
         public MainPage SignIn(BasePage bp, string username, string password)
         {
-            SignInElement.Click();
-            this.WaitUntilDisplayed(UsernameFieldElement);
-            this.WaitUntilDisplayed(UserpasswordElement);
-            this.FillFields(username, password);
-            RememberLoginElement.Click();
-            LoginButtonElement.Click();
+            WebElementHelper.WaitAndClick(Driver, By.XPath(signInButtonXPath));
+            WebElementHelper.WaitAndSendKeys(Driver, By.XPath(userNameXpath), username);
+            WebElementHelper.WaitAndSendKeys(Driver, By.XPath(userPassLocator), password);
+            WebElementHelper.WaitAndClick(Driver, By.XPath(loginInButtonXpath));
             return new MainPage(bp);
         }
     }

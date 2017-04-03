@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +25,18 @@ namespace Volotea.Steps
         public BookingFirstStepPage SelectFlight(BasePage bp)
         {
             bp.Refresh();
-            WebElementHelper.WaitAndClick(Driver, By.XPath(depAirportXPath));
-            WebElementHelper.WaitAndClick(Driver, By.XPath(depXPath));
-            WebElementHelper.WaitAndClick(Driver, By.XPath(desAirportXPath));
-            WebElementHelper.WaitAndClick(Driver, By.XPath(desXPath));
-            WebElementHelper.WaitAndClick(Driver, By.XPath(findFlightsXPath));
+            Thread.Sleep(2000);
+            //WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            //wait.Until(d => ((IJavaScriptExecutor)Driver).ExecuteScript("return document.readyState").Equals("complete"));
+            WebElementHelper.MoveToElementAndClick(Driver, By.XPath(depAirportXPath));
+            WebElementHelper.MoveToElementAndClick(Driver, By.XPath(depXPath));
+            Thread.Sleep(500);
+            WebElementHelper.MoveToElementAndClick(Driver, By.XPath(desAirportXPath));
+            WebElementHelper.MoveToElementAndClick(Driver, By.XPath(desXPath));
+            Thread.Sleep(2000);
+            WebElementHelper.MoveToElementAndClick(Driver, By.XPath("//input[@data-vol-search-i-check tabindex = '2']"));
+            //WebElementHelper.MoveToElementAndClick(Driver, By.XPath("//label[contains(text(), 'One-way')]"));
+            //WebElementHelper.MoveToElementAndClick(Driver, By.XPath(findFlightsXPath));
             return new BookingFirstStepPage(bp);
         }
     }

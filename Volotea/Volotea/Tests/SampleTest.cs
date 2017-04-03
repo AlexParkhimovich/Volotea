@@ -6,9 +6,10 @@ using OpenQA.Selenium.Chrome;
 namespace Volotea
 {
     [TestFixture]
+    [Ignore("Check of framework configuration")]
     public class UnitTest1
     {
-        [Test][Ignore ("Check of framework configuration")]
+        [Test]
         public void TestMethod1()
         {
             using (var driver = new ChromeDriver())
@@ -21,7 +22,7 @@ namespace Volotea
                 var loginButton = driver.FindElement(By.XPath("//a[contains(.,'Sign in')]"));
 
                 signInLink.Click();
-                driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(2));
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
                 userNameField.SendKeys("l447557@mvrht.com");
                 userPasswordField.SendKeys("123qwe");
                 loginButton.Click();
