@@ -36,5 +36,12 @@ namespace Volotea.Utils
             act.MoveToElement(Driver.FindElement(locator)).Click();
             act.Perform();
         }
+
+        public static IWebElement WaitUntilElementEnable(IWebDriver Driver, By locator)
+        {
+            WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementExists(locator));
+            return Driver.FindElement(locator);
+        }
     }
 }

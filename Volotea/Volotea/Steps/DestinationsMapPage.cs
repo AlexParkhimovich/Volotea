@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volotea.Utils;
 
 namespace Volotea.Steps
 {
@@ -26,7 +27,7 @@ namespace Volotea.Steps
             foreach (string str in page.cityCodeList)
             {
                 string cityOnMapXPath = mapItemXPath.Replace("***", str);
-                if (!Driver.FindElement(By.XPath(cityOnMapXPath)).Enabled)
+                if (WebElementHelper.WaitUntilElementEnable(Driver, By.XPath(cityOnMapXPath)) == null)
                 {
                     Message = string.Format("city {0} does not found", str);
                     sb.Append(Message);
