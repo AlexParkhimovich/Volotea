@@ -70,7 +70,7 @@ namespace Volotea.Data {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Volotea/Data/cities.xml.
+        ///   Looks up a localized string similar to Volotea/Volotea/Data/cities.xml.
         /// </summary>
         internal static string CitiesXmlFile {
             get {
