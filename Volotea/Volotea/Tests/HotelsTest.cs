@@ -9,6 +9,7 @@ using System.Threading;
 namespace Volotea.Tests
 {
     [TestFixture]
+    [Ignore("Uladzimir Shved's test")]
     class HotelsTest : BaseTest
     {
         [SetUp]
@@ -17,7 +18,7 @@ namespace Volotea.Tests
             page = new Steps.HotelsPage("chrome");            
         }
 
-        [Test][Ignore("Uladzimir Shved test")]
+        [Test]
         public void TestCheapestHotel()
         {
             page.GoTo("http://hotels.volotea.com/");

@@ -19,17 +19,15 @@ namespace Volotea.Steps
         private static string tmpDay = DateTime.Now.Day.ToString();
         private By dayLocator = By.XPath(string.Format("//span[@class = 'c2-day-inner' and contains(text(), {0})]", tmpDay));
 
-        private By cityInputLocator = By.XPath("//input[contains(@placeholder, 'but you can try!')]");//"//input[@class = 'c-autocomplete__input sb-searchbox__input sb-destination__input sb-autocomplete__input-two-lines']");
-        private By confirmCityLocator = By.XPath("//b[@class = 'search_hl_name']");//"//li[@data-i = '0']");
+        private By cityInputLocator = By.XPath("//input[contains(@placeholder, 'but you can try!')]");
+        private By confirmCityLocator = By.XPath("//b[@class = 'search_hl_name']");
         private By checkInDateLocator = By.XPath("//div[@data-placeholder = 'Check-in Date']");
 
-        //private By monthLocator = By.XPath("//div[@class = 'c2-months-table']");
-        //private By tempMonthLocator = By.XPath("//div[@data-offset = '0']");
         private By tmpDayLocator = By.XPath("//td[contains(@class, 'c2-day c2-day-s-today c2-day-s-in-range c2-day-s-first-in-range')]");
 
         private By letsGoButtonLocator = By.XPath("//span[@class = 'b-button__text']");
         private By allHotelsLocator = By.XPath("//div[contains(@class, 'sr_item sr_item_new') and not(contains(@class, 'soldout_property'))][../@id = 'hotellist_inner']");//"//div[@id = 'hotellist_inner']");
-        private By hotelPriceLocator = By.XPath("//strong[contains(@class, ' price scarcity_color')]");//"//b[contains(text(), 'BYN ')]");//"//strong[contains(@class, ' price availprice  no_rack_rate')]");
+        private By hotelPriceLocator = By.XPath("//strong[contains(@class, ' price scarcity_color')]");
         private By hotelNameLocator = By.XPath("//span[@class = 'sr-hotel__name']");
         private By actualPriceLocator = By.XPath("//strong[contains(@class, ' b-tooltip-with-price-breakdown-tracker   rooms-table-room-price red-actual-rack-rate')]");//"//strong[contains(@data-price-without-addons, 'BYN')]");
 
@@ -37,7 +35,7 @@ namespace Volotea.Steps
         {
             get { return Driver.FindElement(cityInputLocator); }
         }
-       
+
         public IWebElement ConfirmCity
         {
             get { return Driver.FindElement(confirmCityLocator); }
@@ -89,7 +87,7 @@ namespace Volotea.Steps
             WaitAndClick(CityInput);
             CityInput.SendKeys("Venice");
             Thread.Sleep(3000);
-            WaitAndClick(ConfirmCity);          
+            WaitAndClick(ConfirmCity);
             WaitAndClick(CheckInDate);
             WaitAndClick(CheckInDate);
             WaitAndClick(Day);
@@ -106,30 +104,27 @@ namespace Volotea.Steps
             {
                 MoveCursorToElement(hotel);
                 By someHotelPriceLocator = hotelPriceLocator;
-                if(hotel.FindElement(hotelPriceLocator).Enabled == false)
+                if (hotel.FindElement(hotelPriceLocator).Enabled == false)
                 {
                     someHotelPriceLocator = By.XPath("//strong[contains(@class, 'price availprice  no_rack_rate')]");
-                }                       
-                        //var somehotelPrice = hotel.FindElement(hotelPriceLocator);
+                }
 
-                        //hotelPriceLocator = By.XPath("//strong[contains(@class, 'price availprice  no_rack_rate')]");
-                    hotelPrice = Int32.Parse(hotel.FindElement(someHotelPriceLocator).Text.Replace("BYN ", ""));
-                    if (minPrice > hotelPrice)
-                    {
-                        minPrice = hotelPrice;
-                        cheapestHotel = hotel;
-                    }
-                
+                hotelPrice = Int32.Parse(hotel.FindElement(someHotelPriceLocator).Text.Replace("BYN ", ""));
+                if (minPrice > hotelPrice)
+                {
+                    minPrice = hotelPrice;
+                    cheapestHotel = hotel;
+                }
             }
-            LowestPrice = minPrice.ToString();//cheapestHotel.FindElement(hotelPriceLocator).Text.Replace("BYN ", "");
-            WaitAndClick(cheapestHotel.FindElement(hotelNameLocator));                        
+            LowestPrice = minPrice.ToString();
+            WaitAndClick(cheapestHotel.FindElement(hotelNameLocator));
         }
 
         public string GetActualPrice()
         {
             SwitchToLastTab();
-            MoveCursorToElement(ActualPrice);       
-            return ActualPrice.Text.Replace("BYN ", "");           
+            MoveCursorToElement(ActualPrice);
+            return ActualPrice.Text.Replace("BYN ", "");
         }
     }
 }
