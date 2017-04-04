@@ -29,7 +29,7 @@ namespace Volotea.Steps
         {
             WebElementHelper.JSExecutorWaiter(Driver);
 
-            //bp.Refresh();
+            bp.Refresh();
             WebElementHelper.WaitAndClick(Driver, By.XPath(oneWayRadioXPath));
 
             WebElementHelper.JSExecutorWaiter(Driver);
