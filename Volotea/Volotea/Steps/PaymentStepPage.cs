@@ -20,9 +20,11 @@ namespace Volotea.Steps
 
             //there is popup window on page, i can not disable it or change driver focus to web page from popup window
 
-            Thread.Sleep(500);
+            Thread.Sleep(2000);
             WebElementHelper.WaitAndClick(Driver, By.XPath(flexWindowXPath));
+            Thread.Sleep(2000);
             WebElementHelper.WaitAndSendKeys(Driver, By.XPath(cvvXPath), cvv);
+            Thread.Sleep(2000);
             WebElementHelper.WaitAndClick(Driver, By.XPath(bookThisFlightButtonXPath));
             return new WaitingPage(bp);
         }
