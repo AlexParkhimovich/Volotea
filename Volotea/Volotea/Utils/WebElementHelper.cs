@@ -3,7 +3,6 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,38 +10,50 @@ namespace Volotea.Utils
 {
     public static class WebElementHelper
     {
-        public static IWebElement WaitUntilElementVisible(IWebDriver Driver, By locator)
+        public static IWebElement WaitUntilElementVisible(IWebDriver Driver, By by)
         {
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementIsVisible(locator));
-            //wait.Until(ExpectedConditions.ElementToBeClickable(locator));
-            return Driver.FindElement(locator);
+            wait.Until(ExpectedConditions.ElementIsVisible(by));
+            return Driver.FindElement(by);
         }
 
-        public static void WaitAndClick(IWebDriver Driver, By locator)
+        public static void WaitAndClick(IWebDriver Driver, By by)
         {
-            WaitUntilElementVisible(Driver, locator).Click();
+            WaitUntilElementVisible(Driver, by).Click();
         }
 
-        public static void WaitAndSendKeys(IWebDriver Driver, By locator, string str)
+        public static void WaitAndSendKeys(IWebDriver Driver, By by, string str)
         {
-            WaitUntilElementVisible(Driver, locator).SendKeys(str);
+            WaitUntilElementVisible(Driver, by).SendKeys(str);
         }
 
-        public static void MoveToElementAndClick(IWebDriver Driver, By locator)
+        public static void MoveToElementAndClick(IWebDriver Driver, By by)
         {
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementToBeClickable(locator));
+            wait.Until(ExpectedConditions.ElementExists(by));
             Actions act = new Actions(Driver);
-            act.MoveToElement(Driver.FindElement(locator)).Click();
+            act.MoveToElement(Driver.FindElement(by)).Click();
             act.Perform();
         }
 
-        public static IWebElement WaitUntilElementEnable(IWebDriver Driver, By locator)
+        public static IWebElement WaitUntilElementEnable(IWebDriver Driver, By by)
         {
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementExists(locator));
-            return Driver.FindElement(locator);
+            wait.Until(ExpectedConditions.ElementExists(by));
+            return Driver.FindElement(by);
+        }
+
+        public static bool IsElementPresent(IWebDriver Driver, By by)
+        {
+            try
+            {
+                WaitUntilElementVisible(Driver, by);
+                return true;
+            }
+            catch (NoSuchElementException e)
+            {
+                return false;
+            }
         }
     }
 }

@@ -16,6 +16,9 @@ namespace Volotea.Steps
         private string depXPath = "//a[contains(text(), 'SXB')]";
         private string desAirportXPath = "//input[@placeholder = 'Please choose destination airport']";
         private string desXPath = "//a[contains(text(), 'NCE')]";
+        private string oneWayRadioXPath = "//div[@tab-index= '[1,2,3]']//li[2]";
+        private string depCalendarXpath = "//input[@placeholder = 'Select your departure date'][1]";
+        private string depDateCalendarXPath = "//td[@data-handler = 'selectDay']";
         private string findFlightsXPath = "//a[contains(text(), 'FIND FLIGHTS')]";
 
         public MainPage(BasePage bp) : base(bp)
@@ -25,18 +28,40 @@ namespace Volotea.Steps
         public BookingFirstStepPage SelectFlight(BasePage bp)
         {
             bp.Refresh();
+            WebElementHelper.WaitAndClick(Driver, By.XPath(oneWayRadioXPath));
             Thread.Sleep(2000);
-            //WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-            //wait.Until(d => ((IJavaScriptExecutor)Driver).ExecuteScript("return document.readyState").Equals("complete"));
-            WebElementHelper.MoveToElementAndClick(Driver, By.XPath(depAirportXPath));
-            WebElementHelper.MoveToElementAndClick(Driver, By.XPath(depXPath));
-            Thread.Sleep(500);
-            WebElementHelper.MoveToElementAndClick(Driver, By.XPath(desAirportXPath));
-            WebElementHelper.MoveToElementAndClick(Driver, By.XPath(desXPath));
+            WebElementHelper.WaitAndClick(Driver, By.XPath(depAirportXPath));
             Thread.Sleep(2000);
-            WebElementHelper.MoveToElementAndClick(Driver, By.XPath("//input[@data-vol-search-i-check tabindex = '2']"));
-            //WebElementHelper.MoveToElementAndClick(Driver, By.XPath("//label[contains(text(), 'One-way')]"));
-            //WebElementHelper.MoveToElementAndClick(Driver, By.XPath(findFlightsXPath));
+            WebElementHelper.WaitAndClick(Driver, By.XPath(depXPath));
+
+            if (WebElementHelper.IsElementPresent(Driver, By.XPath(desXPath)))
+            {
+                Thread.Sleep(2000);
+                WebElementHelper.WaitAndClick(Driver, By.XPath(desXPath));
+            }
+            else
+            {
+                Thread.Sleep(2000);
+                WebElementHelper.WaitAndClick(Driver, By.XPath(desAirportXPath));
+                Thread.Sleep(2000);
+                WebElementHelper.WaitAndClick(Driver, By.XPath(desXPath));
+            }
+            
+            if (WebElementHelper.IsElementPresent(Driver, By.XPath(depDateCalendarXPath)))
+            {
+                Thread.Sleep(2000);
+                WebElementHelper.WaitAndClick(Driver, By.XPath(depDateCalendarXPath));
+            }
+            else
+            {
+                Thread.Sleep(2000);
+                WebElementHelper.WaitAndClick(Driver, By.XPath(depCalendarXpath));
+                Thread.Sleep(2000);
+                WebElementHelper.WaitAndClick(Driver, By.XPath(depDateCalendarXPath));
+            }
+
+            Thread.Sleep(2000);
+            WebElementHelper.WaitAndClick(Driver, By.XPath(findFlightsXPath));
             return new BookingFirstStepPage(bp);
         }
     }
