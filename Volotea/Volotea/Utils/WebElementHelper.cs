@@ -55,5 +55,11 @@ namespace Volotea.Utils
                 return false;
             }
         }
+
+        public static void JSExecutorWaiter(IWebDriver Driver)
+        {
+            WebDriverWait waitJS = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            waitJS.Until(d => ((IJavaScriptExecutor)Driver).ExecuteScript("return document.readyState").Equals("complete"));
+        }
     }
 }
